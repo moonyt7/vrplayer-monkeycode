@@ -61,7 +61,7 @@ class PlayerActivity : AppCompatActivity(), SensorEventListener {
         setContentView(binding.root)
         binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                if (!isLandscapeNow()) return
+                if (!readyForGyro()) return
                 binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 onLandscapeReady()
             }
@@ -124,7 +124,7 @@ class PlayerActivity : AppCompatActivity(), SensorEventListener {
         super.onResume()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         binding.glView.onResume()
-        if (isLandscapeNow()) onLandscapeReady()
+        if (readyForGyro()) onLandscapeReady()
         player?.play()
         enterImmersive()
     }
@@ -149,21 +149,27 @@ class PlayerActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        if (isLandscapeNow()) onLandscapeReady()
+        if (readyForGyro()) onLandscapeReady()
     }
 
     override fun onSensorChanged(event: SensorEvent) {
         if (!sensorsReady) return
-        if (event.sensor.type == Sensor.TYPE_GAME_ROTATION_VECTOR ||
-            event.sensor.type == Sensor.TYPE_ROTATION_VECTOR
+        if (event.sensor.type != Sensor.TYPE_GAME_ROTATION_VECTOR &&
+            event.sensor.type != Sensor.TYPE_ROTATION_VECTOR
         ) {
-            orientation.setDisplayRotation(displayRotation())
-            orientation.onSensorVector(event.values)
+            return
         }
+        val rotation = displayRotation()
+        if (rotation != Surface.ROTATION_90 && rotation != Surface.ROTATION_270) return
+        orientation.setDisplayRotation(rotation)
+        orientation.onSensorVector(event.values)
     }
 
     private fun onLandscapeReady() {
-        orientation.setDisplayRotation(displayRotation())
+        val rotation = displayRotation()
+        if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) {
+            orientation.setDisplayRotation(rotation)
+        }
         startSensors()
     }
 
@@ -180,21 +186,20 @@ class PlayerActivity : AppCompatActivity(), SensorEventListener {
         sensorsReady = false
     }
 
-    private fun isLandscapeNow(): Boolean {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) return true
-        return binding.root.width > binding.root.height
+    private fun readyForGyro(): Boolean {
+        if (resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE) return false
+        if (binding.root.width <= binding.root.height) return false
+        val rotation = displayRotation()
+        return rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270
     }
 
     @Suppress("DEPRECATION")
     private fun displayRotation(): Int {
-        val raw = if (Build.VERSION.SDK_INT >= 30) {
+        return if (Build.VERSION.SDK_INT >= 30) {
             display?.rotation ?: Surface.ROTATION_0
         } else {
             windowManager.defaultDisplay.rotation
         }
-        if (raw == Surface.ROTATION_0 && isLandscapeNow()) return Surface.ROTATION_90
-        if (raw == Surface.ROTATION_180 && isLandscapeNow()) return Surface.ROTATION_270
-        return raw
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
