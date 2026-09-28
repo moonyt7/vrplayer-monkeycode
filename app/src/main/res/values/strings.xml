@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VR 播放器</string>
+    <string name="open_local">打开本地视频</string>
+    <string name="open_smb">局域网共享</string>
+    <string name="open_stream">网络串流</string>
+    <string name="stream_title">网络串流</string>
+    <string name="stream_url">视频链接（mp4 / m3u8）</string>
+    <string name="stream_referer">Referer（防盗链，可空）</string>
+    <string name="stream_ua">User-Agent（可空）</string>
+    <string name="stream_cookie">Cookie（可空）</string>
+    <string name="stream_play">播放</string>
+    <string name="stream_paste">粘贴并识别</string>
+    <string name="stream_recent">最近播放</string>
+    <string name="stream_hint">从浏览器猫抓复制直链或 m3u8，可连同 Referer 一起粘贴</string>
+    <string name="error_stream_url">请粘贴 http/https 视频链接</string>
+    <string name="error_stream_play">无法播放该链接</string>
+    <string name="subtitle">手机 VR 盒子 · 360/180/立体 · 固定视角</string>
+    <string name="smb_title">局域网共享</string>
+    <string name="smb_host">主机 IP 或名称</string>
+    <string name="smb_share">共享名</string>
+    <string name="smb_username">用户名</string>
+    <string name="smb_password">密码</string>
+    <string name="smb_domain">域（可空）</string>
+    <string name="smb_connect">连接</string>
+    <string name="smb_parent">返回上级</string>
+    <string name="smb_refresh">刷新</string>
+    <string name="smb_scanning">正在搜索局域网设备…</string>
+    <string name="smb_found">找到 %1$d 台设备</string>
+    <string name="smb_none">未发现设备，可手动输入</string>
+    <string name="smb_manual">手动输入地址</string>
+    <string name="smb_anonymous">匿名登录</string>
+    <string name="smb_remember">记住密码</string>
+    <string name="smb_login_title">登录 %1$s</string>
+    <string name="smb_login">登录</string>
+    <string name="smb_shares">共享文件夹</string>
+    <string name="smb_no_share">没有扫到共享文件夹，可手动输入共享名</string>
+    <string name="smb_share_input">输入共享名</string>
+    <string name="play">播放</string>
+    <string name="pause">暂停</string>
+    <string name="fixed_view">固定视角</string>
+    <string name="reset_view">重置视角</string>
+    <string name="split_screen">分屏</string>
+    <string name="projection">投影</string>
+    <string name="back">返回</string>
+    <string name="error_open_file">无法打开该文件</string>
+    <string name="error_decode">无法解码该视频</string>
+    <string name="error_smb_auth">用户名或密码错误</string>
+    <string name="error_smb_host">无法连接主机</string>
+    <string name="error_smb_share">无法打开共享文件夹</string>
+    <string name="error_smb_read">无法读取该文件</string>
+    <string name="error_empty_file">无法播放该文件</string>
+    <string name="fixed_on">视角已锁定</string>
+    <string name="connecting">正在连接…</string>
+    <string name="ipd_label">瞳距 64mm</string>
+    <string name="ipd_value">瞳距 %1$dmm</string>
+
+    <string-array name="projection_modes">
+        <item>360 全景</item>
+        <item>180 半景</item>
+        <item>180 左右 3D</item>
+        <item>180 上下 3D</item>
+        <item>立方体 3x2</item>
+        <item>立体左右 360</item>
+        <item>立体上下 360</item>
+        <item>平面 2D</item>
+    </string-array>
+</resources>
